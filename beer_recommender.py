@@ -13,7 +13,7 @@ df[df.columns[2:]] = df[df.columns[2:]].fillna(0)
 
 # Streamlit UI
 st.set_page_config(page_title="Beer Recommender", layout="wide")
-st.title("\ud83c\udf7b Beer Flavor Recommender")
+st.title("🍻 Beer Flavor Recommender")
 st.markdown("Adjust the sliders to set your preferred flavor profile. We'll suggest beers that match your taste!")
 
 # Get user flavor preferences with sliders
