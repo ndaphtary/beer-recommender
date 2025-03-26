@@ -36,7 +36,7 @@ df['Similarity'] = similarities
 # Top recommendations
 top_recs = df.sort_values('Similarity', ascending=False).drop_duplicates(['Beer Name (Full)']).head(10)
 
-st.subheader(Top 10 Recommended Beers for You")
+st.subheader("Top 10 Recommended Beers for You")
 st.dataframe(top_recs[['Beer Name (Full)', 'Style', 'Similarity']].reset_index(drop=True))
 
 st.caption("Powered by your taste!")
