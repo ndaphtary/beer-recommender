@@ -6,7 +6,7 @@ import streamlit as st
 
 # Load the dataset
 df = pd.read_csv('beer_profile_and_ratings.csv')
-df = df[['Beer Name (Full)', 'Style', 'Astringency', 'Body', 'Alcohol', 'Bitter',
+df = df[['Beer Name (Full)','ABV', 'Style', 'Astringency', 'Body', 'Alcohol', 'Bitter',
          'Sweet', 'Sour', 'Salty', 'Fruits', 'Hoppy', 'Spices', 'Malty']]
 df['Style'] = df['Style'].fillna('Unknown')
 df[df.columns[2:]] = df[df.columns[2:]].fillna(0)
@@ -19,12 +19,12 @@ st.markdown("Adjust the sliders to set your preferred flavor profile. We'll sugg
 # Get user flavor preferences with sliders
 flavor_weights = {}
 st.sidebar.header("Set Your Flavor Preferences")
-for attr in df.columns[2:]:
+for attr in df.columns[3:]:
     flavor_weights[attr] = st.sidebar.slider(attr, 0.0, 1.0, 0.5, 0.1)
 
 # Normalize and compute similarity
 scaler = MinMaxScaler()
-flavor_attributes = df[df.columns[2:]]
+flavor_attributes = df[df.columns[3:]]
 scaled_flavor_attributes = scaler.fit_transform(flavor_attributes)
 
 user_vector = np.array([flavor_weights[attr] for attr in flavor_attributes.columns]).reshape(1, -1)
@@ -37,6 +37,6 @@ df['Similarity'] = similarities
 top_recs = df.sort_values('Similarity', ascending=False).drop_duplicates(['Beer Name (Full)']).head(10)
 
 st.subheader("Top 10 Recommended Beers for You")
-st.dataframe(top_recs[['Beer Name (Full)', 'Style', 'Similarity']].reset_index(drop=True))
+st.dataframe(top_recs[['Beer Name (Full)', 'Style','ABV', 'Similarity']].reset_index(drop=True))
 
 st.caption("Powered by your taste!")
